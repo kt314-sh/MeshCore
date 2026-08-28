@@ -5,6 +5,7 @@
 #include <helpers/radiolib/RadioLibWrappers.h>
 #include <HeltecV3Board.h>
 #include <helpers/radiolib/CustomSX1262Wrapper.h>
+#include <helpers/radiolib/CustomSX1268Wrapper.h>
 #include <helpers/AutoDiscoverRTCClock.h>
 #include <helpers/SensorManager.h>
 #include <helpers/sensors/EnvironmentSensorManager.h>

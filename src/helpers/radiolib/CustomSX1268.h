@@ -11,6 +11,15 @@ class CustomSX1268 : public SX1268 {
   public:
     CustomSX1268(Module *mod) : SX1268(mod) { }
 
+    // Новый метод для получения текущей мощности
+    uint8_t getTxPower() const { return _txPower; }
+
+    // Переопределяем метод установки мощности
+    int16_t setOutputPower(int8_t power) override {
+        _txPower = power;                     // сохраняем
+        return SX1268::setOutputPower(power); // вызываем родительский
+    }
+
   #ifdef RP2040_PLATFORM
     bool std_init(SPIClassRP2040* spi = NULL)
   #else
@@ -143,4 +152,7 @@ class CustomSX1268 : public SX1268 {
       readRegister(RADIOLIB_SX126X_REG_RX_GAIN, &rxGain, 1);
       return (rxGain == RADIOLIB_SX126X_RX_GAIN_BOOSTED);
     }
+
+  private:
+    uint8_t _txPower = 0;    
 };

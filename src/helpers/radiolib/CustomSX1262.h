@@ -11,6 +11,15 @@ class CustomSX1262 : public SX1262 {
 
   public:
     CustomSX1262(Module *mod) : SX1262(mod) { }
+	
+    // Новый метод для получения текущей мощности
+    uint8_t getTxPower() const { return _txPower; }
+
+    // Переопределяем метод установки мощности
+    int16_t setOutputPower(int8_t power) override {
+        _txPower = power;                     // сохраняем
+        return SX1262::setOutputPower(power); // вызываем родительский
+    }
 
   #ifdef RP2040_PLATFORM
     bool std_init(SPIClassRP2040* spi = NULL)
@@ -162,4 +171,7 @@ class CustomSX1262 : public SX1262 {
       readRegister(RADIOLIB_SX126X_REG_RX_GAIN, &rxGain, 1);
       return (rxGain == RADIOLIB_SX126X_RX_GAIN_BOOSTED);
     }
+    
+  private:
+    uint8_t _txPower = 0;
 };

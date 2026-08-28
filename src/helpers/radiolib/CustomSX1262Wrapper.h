@@ -12,6 +12,16 @@ class CustomSX1262Wrapper : public RadioLibWrapper {
 public:
   CustomSX1262Wrapper(CustomSX1262& radio, mesh::MainBoard& board) : RadioLibWrapper(radio, board) { }
 
+  // Устанавливает мощность, возвращает true при успехе
+  bool setPower(int8_t power) {
+    return ((CustomSX1262 *)_radio)->setOutputPower(power) == RADIOLIB_ERR_NONE;
+  }
+
+  // Новый метод для получения текущей мощности
+  uint8_t getPower() const {
+    return ((CustomSX1262 *)_radio)->getTxPower();
+  }
+
   void setParams(float freq, float bw, uint8_t sf, uint8_t cr) override {
     ((CustomSX1262 *)_radio)->setFrequency(freq);
     ((CustomSX1262 *)_radio)->setSpreadingFactor(sf);
